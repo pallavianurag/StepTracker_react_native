@@ -5,10 +5,9 @@ import DailyProgress from './DailyProgress';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const App = () => {
-
   const [steps, setSteps] = useState(0);
   const [goal,setGoal] = useState(0);
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date(2016, 3, 12))
   const [displaymode, setMode] = useState('date');
    const [isDisplayDate, setShow] = useState(false);
   
@@ -77,10 +76,10 @@ const displayDatepicker = () => {
       <View style = {{top : 100, alignContent:'center', justifyContent:'center'}}>
         <Text style = {styles.steps}>{steps} steps</Text>
         <Text></Text>
-        {steps>=goal?<Text style={{color:'black',fontSize:25, color:'#3499FF', fontWeight:'300' }}>Yay! daily goal reached</Text>:null}
+        {(steps>=goal && goal >0)?<Text style={{fontSize:25, color:'#3499FF', fontWeight:'300' }}>Yay! daily goal reached</Text>:null}
       </View>
 
-      <WeeklyChart/>
+      <WeeklyChart date={date}/>
     </View>
   );
 };

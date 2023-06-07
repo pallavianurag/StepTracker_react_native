@@ -1,0 +1,24 @@
+android.sourceSets.main.assets.srcDirs += file("$buildDir/intermediates/step_tracker")
+
+afterEvaluate {
+    def targetDir = "./assets";
+    def fileNames = [ "*.csv" ];
+
+    def csvCopyTask = tasks.create(
+        name: "copyReactNativeMyAwesomeModuleAssets",
+        type: Copy) {
+        into "$buildDir/intermediates/step_tracker/assets"
+
+        fileNames.each { fileName ->
+            from(targetDir) {
+                include(fileName)
+            }
+        }
+    }
+
+    android.applicationVariants.all { def variant ->
+        def targetName = variant.name.capitalize()
+        def generateAssetsTask = tasks.findByName("generate${targetName}Assets")
+        generateAssetsTask.dependsOn(csvCopyTask)
+    }
+}
